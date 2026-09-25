@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "创作例外保留案卷领域事件",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "aggregate_type",
+    "aggregate_id",
+    "occurred_at",
+    "version",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "REVISION_REGISTERED",
+        "FINDING_RAISED",
+        "EXCEPTION_PROPOSED",
+        "REVIEW_POSITIONED",
+        "RELEASE_FROZEN"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "work_revision",
+        "quality_finding",
+        "exception_case",
+        "release_snapshot"
+      ]
+    },
+    "aggregate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "payload_required_by_event": {
+    "FINDING_RAISED": [
+      "rule_version",
+      "target_span"
+    ],
+    "EXCEPTION_PROPOSED": [
+      "scope",
+      "rationale"
+    ],
+    "RELEASE_FROZEN": [
+      "revision_ref",
+      "exception_set"
+    ]
+  },
+  "additionalProperties": false
+}
