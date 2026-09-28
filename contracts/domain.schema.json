@@ -20,19 +20,38 @@
       "type": "string",
       "enum": [
         "REVISION_REGISTERED",
+        "SOURCE_RECORDED",
+        "SOURCE_WITHDRAWN",
         "FINDING_RAISED",
+        "FINDING_RESOLVED",
         "EXCEPTION_PROPOSED",
+        "INTENT_STATED",
         "REVIEW_POSITIONED",
-        "RELEASE_FROZEN"
+        "RISK_CLEARANCE_DECIDED",
+        "EXCEPTION_SIGNED",
+        "SUGGESTION_RECORDED",
+        "SUGGESTION_DECIDED",
+        "RELEASE_FROZEN",
+        "RELEASE_PUBLISHED",
+        "ERRATUM_LINKED",
+        "BATCH_OVERRIDE_REJECTED",
+        "RECALCULATION_STARTED",
+        "RECALCULATION_INTERRUPTED",
+        "RECALCULATION_RESUMED",
+        "RECALCULATION_COMPLETED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "work_revision",
+        "source_material",
         "quality_finding",
         "exception_case",
-        "release_snapshot"
+        "revision_suggestion",
+        "release_snapshot",
+        "audit_entry",
+        "recalculation_job"
       ]
     },
     "aggregate_id": {
@@ -51,19 +70,195 @@
       "type": "object"
     }
   },
+  "aggregate_by_event": {
+    "REVISION_REGISTERED": "work_revision",
+    "SOURCE_RECORDED": "source_material",
+    "SOURCE_WITHDRAWN": "source_material",
+    "FINDING_RAISED": "quality_finding",
+    "FINDING_RESOLVED": "quality_finding",
+    "EXCEPTION_PROPOSED": "exception_case",
+    "INTENT_STATED": "exception_case",
+    "REVIEW_POSITIONED": "exception_case",
+    "RISK_CLEARANCE_DECIDED": "exception_case",
+    "EXCEPTION_SIGNED": "exception_case",
+    "SUGGESTION_RECORDED": "revision_suggestion",
+    "SUGGESTION_DECIDED": "revision_suggestion",
+    "RELEASE_FROZEN": "release_snapshot",
+    "RELEASE_PUBLISHED": "release_snapshot",
+    "ERRATUM_LINKED": "release_snapshot",
+    "BATCH_OVERRIDE_REJECTED": "audit_entry",
+    "RECALCULATION_STARTED": "recalculation_job",
+    "RECALCULATION_INTERRUPTED": "recalculation_job",
+    "RECALCULATION_RESUMED": "recalculation_job",
+    "RECALCULATION_COMPLETED": "recalculation_job"
+  },
   "payload_required_by_event": {
+    "REVISION_REGISTERED": [
+      "work_id",
+      "revision_no",
+      "medium",
+      "spans"
+    ],
+    "SOURCE_RECORDED": [
+      "source_id",
+      "kind",
+      "custodian",
+      "span_refs"
+    ],
+    "SOURCE_WITHDRAWN": [
+      "source_id",
+      "reason"
+    ],
     "FINDING_RAISED": [
       "rule_version",
       "target_span"
     ],
+    "FINDING_RESOLVED": [
+      "finding_ref",
+      "resolution"
+    ],
     "EXCEPTION_PROPOSED": [
       "scope",
-      "rationale"
+      "rationale",
+      "target_span",
+      "proposed_by",
+      "risk_flags",
+      "review"
+    ],
+    "INTENT_STATED": [
+      "case_ref",
+      "author_id",
+      "statement"
+    ],
+    "REVIEW_POSITIONED": [
+      "case_ref",
+      "reviewer_id",
+      "stance"
+    ],
+    "RISK_CLEARANCE_DECIDED": [
+      "case_ref",
+      "risk_domain",
+      "decided_by",
+      "decision"
+    ],
+    "EXCEPTION_SIGNED": [
+      "case_ref",
+      "signed_by",
+      "decision",
+      "scope",
+      "review"
+    ],
+    "SUGGESTION_RECORDED": [
+      "exception_ref",
+      "target_span",
+      "suggested_by",
+      "summary"
+    ],
+    "SUGGESTION_DECIDED": [
+      "suggestion_ref",
+      "decision"
     ],
     "RELEASE_FROZEN": [
+      "release_id",
       "revision_ref",
       "exception_set"
+    ],
+    "RELEASE_PUBLISHED": [
+      "release_id",
+      "revision_ref",
+      "adopted_exception_set"
+    ],
+    "ERRATUM_LINKED": [
+      "release_id",
+      "erratum_id",
+      "affects_exception_refs"
+    ],
+    "BATCH_OVERRIDE_REJECTED": [
+      "attempted_by",
+      "rule_version",
+      "target_exception_refs",
+      "reason"
+    ],
+    "RECALCULATION_STARTED": [
+      "job_id",
+      "trigger",
+      "affected_refs"
+    ],
+    "RECALCULATION_INTERRUPTED": [
+      "job_id",
+      "last_processed_ref"
+    ],
+    "RECALCULATION_RESUMED": [
+      "job_id",
+      "cursor"
+    ],
+    "RECALCULATION_COMPLETED": [
+      "job_id",
+      "outcomes"
     ]
+  },
+  "payload_enum_by_event": {
+    "REVISION_REGISTERED": {
+      "medium": [
+        "text",
+        "footage"
+      ]
+    },
+    "SOURCE_RECORDED": {
+      "kind": [
+        "manuscript",
+        "raw_footage",
+        "performance_log",
+        "recording",
+        "other"
+      ]
+    },
+    "FINDING_RESOLVED": {
+      "resolution": [
+        "dismissed",
+        "fixed",
+        "accepted_as_exception"
+      ]
+    },
+    "REVIEW_POSITIONED": {
+      "stance": [
+        "support",
+        "objection",
+        "abstain"
+      ]
+    },
+    "RISK_CLEARANCE_DECIDED": {
+      "risk_domain": [
+        "copyright",
+        "factual"
+      ],
+      "decision": [
+        "cleared",
+        "conditional",
+        "rejected"
+      ]
+    },
+    "EXCEPTION_SIGNED": {
+      "decision": [
+        "approved",
+        "rejected",
+        "returned"
+      ]
+    },
+    "SUGGESTION_DECIDED": {
+      "decision": [
+        "accepted",
+        "rejected",
+        "applied"
+      ]
+    },
+    "RECALCULATION_STARTED": {
+      "trigger": [
+        "source_withdrawn",
+        "review_due",
+        "batch_rule_recompute"
+      ]
+    }
   },
   "additionalProperties": false
 }

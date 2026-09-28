@@ -1,0 +1,817 @@
+[
+  {
+    "seq": 1,
+    "event_id": "evt-001",
+    "event_type": "REVISION_REGISTERED",
+    "aggregate_type": "work_revision",
+    "aggregate_id": "novel-rev1",
+    "occurred_at": "2026-09-01T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "work_id": "novel-silence",
+      "revision_no": 1,
+      "medium": "text",
+      "spans": [
+        "p12-pause",
+        "p30-quote"
+      ]
+    }
+  },
+  {
+    "seq": 2,
+    "event_id": "evt-002",
+    "event_type": "REVISION_REGISTERED",
+    "aggregate_type": "work_revision",
+    "aggregate_id": "film-cut1",
+    "occurred_at": "2026-09-02T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "work_id": "film-silence",
+      "revision_no": 1,
+      "medium": "footage",
+      "spans": [
+        "shot07-take3"
+      ]
+    }
+  },
+  {
+    "seq": 3,
+    "event_id": "evt-003",
+    "event_type": "SOURCE_RECORDED",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-manuscript",
+    "occurred_at": "2026-09-01T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_id": "src-manuscript",
+      "kind": "manuscript",
+      "custodian": "archive-room",
+      "span_refs": [
+        "novel-rev1#p12-pause",
+        "novel-rev1#p30-quote"
+      ]
+    }
+  },
+  {
+    "seq": 4,
+    "event_id": "evt-004",
+    "event_type": "SOURCE_RECORDED",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-raw-footage",
+    "occurred_at": "2026-09-02T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_id": "src-raw-footage",
+      "kind": "raw_footage",
+      "custodian": "studio-vault",
+      "span_refs": [
+        "film-cut1#shot07-take3"
+      ]
+    }
+  },
+  {
+    "seq": 5,
+    "event_id": "evt-005",
+    "event_type": "SOURCE_RECORDED",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-performance-log",
+    "occurred_at": "2026-09-02T10:30:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_id": "src-performance-log",
+      "kind": "performance_log",
+      "custodian": "script-supervisor",
+      "span_refs": [
+        "film-cut1#shot07-take3"
+      ]
+    }
+  },
+  {
+    "seq": 6,
+    "event_id": "evt-006",
+    "event_type": "FINDING_RAISED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-pause",
+    "occurred_at": "2026-09-03T08:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "rule_version": "rule-3.0",
+      "target_span": "novel-rev1#p12-pause",
+      "raised_by": "engineer-qi",
+      "detail": "检测到超长停顿，疑似排版瑕疵"
+    }
+  },
+  {
+    "seq": 7,
+    "event_id": "evt-007",
+    "event_type": "FINDING_RAISED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-quote",
+    "occurred_at": "2026-09-03T08:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "rule_version": "rule-3.0",
+      "target_span": "novel-rev1#p30-quote",
+      "raised_by": "engineer-qi",
+      "detail": "检测到未登记引用"
+    }
+  },
+  {
+    "seq": 8,
+    "event_id": "evt-008",
+    "event_type": "FINDING_RAISED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-shot",
+    "occurred_at": "2026-09-03T08:10:00+08:00",
+    "version": 1,
+    "payload": {
+      "rule_version": "rule-3.0",
+      "target_span": "film-cut1#shot07-take3",
+      "raised_by": "engineer-qi",
+      "detail": "镜头轻微抖动，疑似稳定器故障"
+    }
+  },
+  {
+    "seq": 9,
+    "event_id": "evt-009",
+    "event_type": "EXCEPTION_PROPOSED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-pause",
+    "occurred_at": "2026-09-04T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "finding_ref": "f-pause",
+      "scope": {
+        "revisions": [
+          "novel-rev1"
+        ],
+        "spans": [
+          "novel-rev1#p12-pause"
+        ]
+      },
+      "rationale": "三秒无声停顿是母女和解一场的情绪落点，属刻意保留的节奏",
+      "target_span": "novel-rev1#p12-pause",
+      "proposed_by": "author-mo",
+      "risk_flags": [],
+      "review": {
+        "review_required": true,
+        "review_trigger": "reprint",
+        "review_due": "2027-01-01T00:00:00+08:00"
+      }
+    }
+  },
+  {
+    "seq": 10,
+    "event_id": "evt-010",
+    "event_type": "EXCEPTION_PROPOSED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-quote",
+    "occurred_at": "2026-09-04T09:10:00+08:00",
+    "version": 1,
+    "payload": {
+      "finding_ref": "f-quote",
+      "scope": {
+        "revisions": [
+          "novel-rev1"
+        ],
+        "spans": [
+          "novel-rev1#p30-quote"
+        ]
+      },
+      "rationale": "段落引用地方戏唱词四行，虚构人物口述，服务于情节真实感",
+      "target_span": "novel-rev1#p30-quote",
+      "proposed_by": "author-mo",
+      "risk_flags": [
+        "copyright"
+      ],
+      "review": {
+        "review_required": false,
+        "review_trigger": null
+      }
+    }
+  },
+  {
+    "seq": 11,
+    "event_id": "evt-011",
+    "event_type": "EXCEPTION_PROPOSED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-shot",
+    "occurred_at": "2026-09-04T09:20:00+08:00",
+    "version": 1,
+    "payload": {
+      "finding_ref": "f-shot",
+      "scope": {
+        "revisions": [
+          "film-cut1"
+        ],
+        "spans": [
+          "film-cut1#shot07-take3"
+        ]
+      },
+      "rationale": "手持微抖与演员临场哽咽同框，是表演现场不可复拍的真实反应",
+      "target_span": "film-cut1#shot07-take3",
+      "proposed_by": "author-mo",
+      "risk_flags": [],
+      "review": {
+        "review_required": false,
+        "review_trigger": null
+      }
+    }
+  },
+  {
+    "seq": 12,
+    "event_id": "evt-012",
+    "event_type": "INTENT_STATED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-pause",
+    "occurred_at": "2026-09-04T10:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "case_ref": "case-pause",
+      "author_id": "author-mo",
+      "statement": "停顿处我刻意删去全部心理描写，让沉默本身说话。"
+    }
+  },
+  {
+    "seq": 13,
+    "event_id": "evt-013",
+    "event_type": "INTENT_STATED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-quote",
+    "occurred_at": "2026-09-04T10:05:00+08:00",
+    "version": 2,
+    "payload": {
+      "case_ref": "case-quote",
+      "author_id": "author-mo",
+      "statement": "唱词只取四句意象，不构成整段搬用，且与人物口音绑定。"
+    }
+  },
+  {
+    "seq": 14,
+    "event_id": "evt-014",
+    "event_type": "INTENT_STATED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-shot",
+    "occurred_at": "2026-09-04T10:10:00+08:00",
+    "version": 2,
+    "payload": {
+      "case_ref": "case-shot",
+      "author_id": "author-mo",
+      "statement": "take3 的哽咽是演员临场反应，我要求保留而非补拍。"
+    }
+  },
+  {
+    "seq": 15,
+    "event_id": "evt-015",
+    "event_type": "REVIEW_POSITIONED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-pause",
+    "occurred_at": "2026-09-05T09:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "case_ref": "case-pause",
+      "reviewer_id": "editor-lin",
+      "stance": "support",
+      "note": "初校与二校都确认停顿是有意安排"
+    }
+  },
+  {
+    "seq": 16,
+    "event_id": "evt-016",
+    "event_type": "REVIEW_POSITIONED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-pause",
+    "occurred_at": "2026-09-05T09:30:00+08:00",
+    "version": 4,
+    "payload": {
+      "case_ref": "case-pause",
+      "reviewer_id": "editor-zhao",
+      "stance": "objection",
+      "note": "担心纸书读者误认缺字，建议加编者注"
+    }
+  },
+  {
+    "seq": 17,
+    "event_id": "evt-017",
+    "event_type": "REVIEW_POSITIONED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-shot",
+    "occurred_at": "2026-09-05T10:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "case_ref": "case-shot",
+      "reviewer_id": "editor-lin",
+      "stance": "support",
+      "note": "导演与场记现场记录均支持保留"
+    }
+  },
+  {
+    "seq": 18,
+    "event_id": "evt-018",
+    "event_type": "RISK_CLEARANCE_DECIDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-quote",
+    "occurred_at": "2026-09-06T09:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "case_ref": "case-quote",
+      "risk_domain": "copyright",
+      "decided_by": "copyright-yu",
+      "decision": "conditional",
+      "conditions": [
+        "再版前补取曲牌出处确认",
+        "公开说明只写“地方戏曲牌”不录全文"
+      ],
+      "note": "四行属于短引用，附署名条件放行"
+    }
+  },
+  {
+    "seq": 19,
+    "event_id": "evt-019",
+    "event_type": "EXCEPTION_SIGNED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-pause",
+    "occurred_at": "2026-09-07T09:00:00+08:00",
+    "version": 5,
+    "payload": {
+      "case_ref": "case-pause",
+      "signed_by": "editor-lin",
+      "decision": "approved",
+      "scope": {
+        "revisions": [
+          "novel-rev1"
+        ],
+        "spans": [
+          "novel-rev1#p12-pause"
+        ]
+      },
+      "review": {
+        "review_required": true,
+        "review_trigger": "reprint",
+        "review_due": "2027-01-01T00:00:00+08:00"
+      },
+      "note": "异议（加编者注）随卷保留，正文维持停顿"
+    }
+  },
+  {
+    "seq": 20,
+    "event_id": "evt-020",
+    "event_type": "EXCEPTION_SIGNED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-quote",
+    "occurred_at": "2026-09-07T09:10:00+08:00",
+    "version": 4,
+    "payload": {
+      "case_ref": "case-quote",
+      "signed_by": "editor-lin",
+      "decision": "approved",
+      "scope": {
+        "revisions": [
+          "novel-rev1"
+        ],
+        "spans": [
+          "novel-rev1#p30-quote"
+        ]
+      },
+      "review": {
+        "review_required": false,
+        "review_trigger": null
+      },
+      "note": "按版权审查官条件放行，公开说明不录唱词全文"
+    }
+  },
+  {
+    "seq": 21,
+    "event_id": "evt-021",
+    "event_type": "EXCEPTION_SIGNED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "case-shot",
+    "occurred_at": "2026-09-07T09:20:00+08:00",
+    "version": 4,
+    "payload": {
+      "case_ref": "case-shot",
+      "signed_by": "editor-lin",
+      "decision": "approved",
+      "scope": {
+        "revisions": [
+          "film-cut1"
+        ],
+        "spans": [
+          "film-cut1#shot07-take3"
+        ]
+      },
+      "review": {
+        "review_required": false,
+        "review_trigger": null
+      }
+    }
+  },
+  {
+    "seq": 22,
+    "event_id": "evt-022",
+    "event_type": "FINDING_RESOLVED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-pause",
+    "occurred_at": "2026-09-07T10:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "finding_ref": "f-pause",
+      "resolution": "accepted_as_exception",
+      "case_ref": "case-pause"
+    }
+  },
+  {
+    "seq": 23,
+    "event_id": "evt-023",
+    "event_type": "FINDING_RESOLVED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-quote",
+    "occurred_at": "2026-09-07T10:05:00+08:00",
+    "version": 2,
+    "payload": {
+      "finding_ref": "f-quote",
+      "resolution": "accepted_as_exception",
+      "case_ref": "case-quote"
+    }
+  },
+  {
+    "seq": 24,
+    "event_id": "evt-024",
+    "event_type": "FINDING_RESOLVED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "f-shot",
+    "occurred_at": "2026-09-07T10:10:00+08:00",
+    "version": 2,
+    "payload": {
+      "finding_ref": "f-shot",
+      "resolution": "accepted_as_exception",
+      "case_ref": "case-shot"
+    }
+  },
+  {
+    "seq": 25,
+    "event_id": "evt-025",
+    "event_type": "SUGGESTION_RECORDED",
+    "aggregate_type": "revision_suggestion",
+    "aggregate_id": "sug-pause-trim",
+    "occurred_at": "2026-09-08T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "exception_ref": "case-pause",
+      "target_span": "novel-rev1#p12-pause",
+      "suggested_by": "engineer-qi",
+      "summary": "建议把停顿压缩到 1 秒以统一节奏"
+    }
+  },
+  {
+    "seq": 26,
+    "event_id": "evt-026",
+    "event_type": "SUGGESTION_DECIDED",
+    "aggregate_type": "revision_suggestion",
+    "aggregate_id": "sug-pause-trim",
+    "occurred_at": "2026-09-08T11:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "suggestion_ref": "sug-pause-trim",
+      "decision": "rejected"
+    }
+  },
+  {
+    "seq": 27,
+    "event_id": "evt-027",
+    "event_type": "RELEASE_FROZEN",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "rel-book-1",
+    "occurred_at": "2026-10-01T08:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "release_id": "rel-book-1",
+      "revision_ref": "novel-rev1",
+      "exception_set": [
+        "case-pause",
+        "case-quote"
+      ]
+    }
+  },
+  {
+    "seq": 28,
+    "event_id": "evt-028",
+    "event_type": "RELEASE_PUBLISHED",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "rel-book-1",
+    "occurred_at": "2026-10-05T08:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "release_id": "rel-book-1",
+      "revision_ref": "novel-rev1",
+      "adopted_exception_set": [
+        "case-pause",
+        "case-quote"
+      ]
+    }
+  },
+  {
+    "seq": 29,
+    "event_id": "evt-029",
+    "event_type": "RELEASE_FROZEN",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "rel-film-1",
+    "occurred_at": "2026-10-02T08:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "release_id": "rel-film-1",
+      "revision_ref": "film-cut1",
+      "exception_set": [
+        "case-shot"
+      ]
+    }
+  },
+  {
+    "seq": 30,
+    "event_id": "evt-030",
+    "event_type": "RELEASE_PUBLISHED",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "rel-film-1",
+    "occurred_at": "2026-10-08T08:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "release_id": "rel-film-1",
+      "revision_ref": "film-cut1",
+      "adopted_exception_set": [
+        "case-shot"
+      ]
+    }
+  },
+  {
+    "seq": 31,
+    "event_id": "evt-031",
+    "event_type": "REVISION_REGISTERED",
+    "aggregate_type": "work_revision",
+    "aggregate_id": "novel-rev2",
+    "occurred_at": "2026-10-20T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "work_id": "novel-silence",
+      "revision_no": 2,
+      "medium": "text",
+      "spans": [
+        "p30-quote"
+      ],
+      "basis_ref": "novel-rev1"
+    }
+  },
+  {
+    "seq": 32,
+    "event_id": "evt-032",
+    "event_type": "SUGGESTION_RECORDED",
+    "aggregate_type": "revision_suggestion",
+    "aggregate_id": "sug-quote-rewrite",
+    "occurred_at": "2026-10-21T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "exception_ref": "case-quote",
+      "target_span": "novel-rev1#p30-quote",
+      "suggested_by": "editor-lin",
+      "summary": "再版将四行唱词替换为同义概述，消除版权依赖"
+    }
+  },
+  {
+    "seq": 33,
+    "event_id": "evt-033",
+    "event_type": "SUGGESTION_DECIDED",
+    "aggregate_type": "revision_suggestion",
+    "aggregate_id": "sug-quote-rewrite",
+    "occurred_at": "2026-10-22T09:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "suggestion_ref": "sug-quote-rewrite",
+      "decision": "applied",
+      "applied_to": "novel-rev2"
+    }
+  },
+  {
+    "seq": 34,
+    "event_id": "evt-034",
+    "event_type": "SOURCE_WITHDRAWN",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-manuscript",
+    "occurred_at": "2026-11-01T09:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "source_id": "src-manuscript",
+      "reason": "手稿授权被权利方撤回，需复核全部引用依据"
+    }
+  },
+  {
+    "seq": 35,
+    "event_id": "job-src-1:v1:RECALCULATION_STARTED:989f1959",
+    "event_type": "RECALCULATION_STARTED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-src-1",
+    "occurred_at": "2026-11-01T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "job_id": "job-src-1",
+      "trigger": "source_withdrawn",
+      "affected_refs": [
+        "case-pause",
+        "case-quote"
+      ]
+    }
+  },
+  {
+    "seq": 36,
+    "event_id": "job-src-1:v2:RECALCULATION_INTERRUPTED:9399bd4d",
+    "event_type": "RECALCULATION_INTERRUPTED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-src-1",
+    "occurred_at": "2026-11-01T09:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "job_id": "job-src-1",
+      "last_processed_ref": "case-pause",
+      "outcomes_so_far": [
+        {
+          "ref": "case-pause",
+          "outcome": "erratum_required",
+          "reason": "例外已随出版/上映采用，来源撤回须以勘误处理"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 37,
+    "event_id": "evt-035",
+    "event_type": "RECALCULATION_RESUMED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-src-1",
+    "occurred_at": "2026-11-01T09:30:00+08:00",
+    "version": 3,
+    "payload": {
+      "job_id": "job-src-1",
+      "cursor": 1
+    }
+  },
+  {
+    "seq": 38,
+    "event_id": "job-src-1:v4:RECALCULATION_COMPLETED:fa1c9615",
+    "event_type": "RECALCULATION_COMPLETED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-src-1",
+    "occurred_at": "2026-11-01T09:30:00+08:00",
+    "version": 4,
+    "payload": {
+      "job_id": "job-src-1",
+      "outcomes": [
+        {
+          "ref": "case-pause",
+          "outcome": "erratum_required",
+          "reason": "例外已随出版/上映采用，来源撤回须以勘误处理"
+        },
+        {
+          "ref": "case-quote",
+          "outcome": "erratum_required",
+          "reason": "例外已随出版/上映采用，来源撤回须以勘误处理"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 39,
+    "event_id": "evt-036",
+    "event_type": "ERRATUM_LINKED",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "rel-book-1",
+    "occurred_at": "2026-11-02T09:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "release_id": "rel-book-1",
+      "erratum_id": "erratum-2026-11-01",
+      "affects_exception_refs": [
+        "case-quote",
+        "case-pause"
+      ]
+    }
+  },
+  {
+    "seq": 40,
+    "event_id": "evt-037",
+    "event_type": "BATCH_OVERRIDE_REJECTED",
+    "aggregate_type": "audit_entry",
+    "aggregate_id": "audit-rule4-rollout",
+    "occurred_at": "2026-11-10T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "attempted_by": "engineer-qi",
+      "rule_version": "rule-4.0",
+      "target_exception_refs": [
+        "case-pause",
+        "case-quote",
+        "case-shot"
+      ],
+      "reason": "统一节奏/引用规则 4.0 全量上线，要求自动改写历史判断"
+    }
+  },
+  {
+    "seq": 41,
+    "event_id": "audit-job-rule4:v1:BATCH_OVERRIDE_REJECTED:f8b38106",
+    "event_type": "BATCH_OVERRIDE_REJECTED",
+    "aggregate_type": "audit_entry",
+    "aggregate_id": "audit-job-rule4",
+    "occurred_at": "2026-11-10T09:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "attempted_by": "engineer-qi",
+      "rule_version": "rule-4.0",
+      "target_exception_refs": [
+        "case-pause",
+        "case-quote",
+        "case-shot"
+      ],
+      "reason": "规则 rule-4.0 批量重算不得改判已签发艺术判断，判断保留"
+    }
+  },
+  {
+    "seq": 42,
+    "event_id": "evt-038",
+    "event_type": "RECALCULATION_STARTED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-rule4",
+    "occurred_at": "2026-11-10T09:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "job_id": "job-rule4",
+      "trigger": "batch_rule_recompute",
+      "affected_refs": [
+        "case-pause",
+        "case-quote",
+        "case-shot"
+      ],
+      "rule_version": "rule-4.0"
+    }
+  },
+  {
+    "seq": 43,
+    "event_id": "job-rule4:v2:RECALCULATION_COMPLETED:1ec49cb6",
+    "event_type": "RECALCULATION_COMPLETED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-rule4",
+    "occurred_at": "2026-11-10T09:05:00+08:00",
+    "version": 2,
+    "payload": {
+      "job_id": "job-rule4",
+      "outcomes": [
+        {
+          "ref": "case-pause",
+          "outcome": "retained",
+          "reason": "已签发艺术判断保留，规则改判被拒绝"
+        },
+        {
+          "ref": "case-quote",
+          "outcome": "retained",
+          "reason": "已签发艺术判断保留，规则改判被拒绝"
+        },
+        {
+          "ref": "case-shot",
+          "outcome": "retained",
+          "reason": "已签发艺术判断保留，规则改判被拒绝"
+        }
+      ]
+    }
+  },
+  {
+    "seq": 44,
+    "event_id": "evt-039",
+    "event_type": "RECALCULATION_STARTED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-review-due",
+    "occurred_at": "2027-02-01T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "job_id": "job-review-due",
+      "trigger": "review_due",
+      "affected_refs": [
+        "case-pause"
+      ]
+    }
+  },
+  {
+    "seq": 45,
+    "event_id": "job-review-due:v2:RECALCULATION_COMPLETED:51fd6e2b",
+    "event_type": "RECALCULATION_COMPLETED",
+    "aggregate_type": "recalculation_job",
+    "aggregate_id": "job-review-due",
+    "occurred_at": "2027-02-01T09:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "job_id": "job-review-due",
+      "outcomes": [
+        {
+          "ref": "case-pause",
+          "outcome": "review_required",
+          "reason": "复审到期，尚无到期后的再确认"
+        }
+      ]
+    }
+  }
+]

@@ -46,6 +46,18 @@ def validate_event(payload: Any, schema: Mapping[str, Any]) -> list[ContractIssu
         if isinstance(value, str) and allowed and value not in allowed:
             issues.append(ContractIssue(field, "unsupported_value", "字段值未在契约中登记"))
     event_type = payload.get("event_type")
+    aggregate_type = payload.get("aggregate_type")
+    aggregate_by_event = schema.get("aggregate_by_event", {})
+    if isinstance(event_type, str) and isinstance(aggregate_type, str):
+        expected_aggregate = aggregate_by_event.get(event_type)
+        if expected_aggregate is not None and aggregate_type != expected_aggregate:
+            issues.append(
+                ContractIssue(
+                    "aggregate_type",
+                    "aggregate_mismatch",
+                    f"事件 {event_type} 必须归属聚合 {expected_aggregate}",
+                )
+            )
     body = payload.get("payload")
     if "payload" in payload and not isinstance(body, Mapping):
         issues.append(ContractIssue("payload", "object_required", "事件载荷必须是 JSON 对象"))
@@ -53,4 +65,10 @@ def validate_event(payload: Any, schema: Mapping[str, Any]) -> list[ContractIssu
         for field in schema.get("payload_required_by_event", {}).get(event_type, []):
             if field not in body:
                 issues.append(ContractIssue(f"payload.{field}", "required", "事件载荷缺少必填字段"))
+        for field, allowed in schema.get("payload_enum_by_event", {}).get(event_type, {}).items():
+            value = body.get(field)
+            if isinstance(value, str) and allowed and value not in allowed:
+                issues.append(
+                    ContractIssue(f"payload.{field}", "unsupported_value", "载荷字段值未在契约中登记")
+                )
     return sorted(issues, key=lambda issue: (issue.field, issue.code))

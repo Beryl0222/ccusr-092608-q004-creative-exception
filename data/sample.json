@@ -2,8 +2,15 @@
   "event_id": "092601-004-sample-001",
   "event_type": "REVISION_REGISTERED",
   "aggregate_type": "work_revision",
-  "aggregate_id": "creative_exception-001",
+  "aggregate_id": "novel-rev-sample",
   "occurred_at": "2026-09-25T10:00:00+08:00",
   "version": 1,
-  "payload": {}
+  "payload": {
+    "work_id": "work-sample",
+    "revision_no": 1,
+    "medium": "text",
+    "spans": [
+      "p01-opening"
+    ]
+  }
 }
