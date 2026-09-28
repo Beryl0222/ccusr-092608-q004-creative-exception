@@ -1,5 +1,5 @@
 [project]
 name = "creative-exception"
-version = "0.1.0"
-description = "创作例外保留案卷领域契约"
+version = "0.2.0"
+description = "创作例外保留案卷：审议事件契约、流级不变量与追溯投影"
 requires-python = ">=3.11"

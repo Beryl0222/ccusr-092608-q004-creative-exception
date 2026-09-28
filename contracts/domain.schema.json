@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "创作例外保留案卷领域事件",
+  "description": "保存作品版本、原始素材、质量发现、艺术例外、引用限制、修改建议、发行采用、复审、撤回、勘误与批量重算之间可稳定交换的基础事实。业务幂等与冲突隔离由上层服务负责。",
   "type": "object",
   "required": [
     "event_id",
@@ -20,19 +21,38 @@
       "type": "string",
       "enum": [
         "REVISION_REGISTERED",
+        "SOURCE_REGISTERED",
+        "SOURCE_WITHDRAWN",
         "FINDING_RAISED",
         "EXCEPTION_PROPOSED",
+        "AUTHOR_STATEMENT_RECORDED",
+        "ON_SET_RECORD_ATTACHED",
         "REVIEW_POSITIONED",
-        "RELEASE_FROZEN"
+        "EXCEPTION_DECIDED",
+        "CITATION_RESTRICTION_IMPOSED",
+        "REVISION_SUGGESTED",
+        "RELEASE_FROZEN",
+        "RELEASE_PUBLISHED",
+        "REVIEW_OUTCOME_RECORDED",
+        "ERRATUM_FILED",
+        "RECOMPUTE_REQUESTED",
+        "RECOMPUTE_CHECKPOINTED",
+        "RECOMPUTE_COMPLETED",
+        "RULE_OVERRIDE_REJECTED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "work_revision",
+        "source_material",
         "quality_finding",
         "exception_case",
-        "release_snapshot"
+        "citation_restriction",
+        "revision_suggestion",
+        "release_snapshot",
+        "erratum",
+        "recompute_job"
       ]
     },
     "aggregate_id": {
@@ -51,19 +71,259 @@
       "type": "object"
     }
   },
+  "additionalProperties": false,
+  "aggregate_by_event": {
+    "REVISION_REGISTERED": "work_revision",
+    "SOURCE_REGISTERED": "source_material",
+    "SOURCE_WITHDRAWN": "source_material",
+    "FINDING_RAISED": "quality_finding",
+    "EXCEPTION_PROPOSED": "exception_case",
+    "AUTHOR_STATEMENT_RECORDED": "exception_case",
+    "ON_SET_RECORD_ATTACHED": "exception_case",
+    "REVIEW_POSITIONED": "exception_case",
+    "EXCEPTION_DECIDED": "exception_case",
+    "RULE_OVERRIDE_REJECTED": "exception_case",
+    "REVIEW_OUTCOME_RECORDED": "exception_case",
+    "CITATION_RESTRICTION_IMPOSED": "citation_restriction",
+    "REVISION_SUGGESTED": "revision_suggestion",
+    "RELEASE_FROZEN": "release_snapshot",
+    "RELEASE_PUBLISHED": "release_snapshot",
+    "ERRATUM_FILED": "erratum",
+    "RECOMPUTE_REQUESTED": "recompute_job",
+    "RECOMPUTE_CHECKPOINTED": "recompute_job",
+    "RECOMPUTE_COMPLETED": "recompute_job"
+  },
   "payload_required_by_event": {
+    "REVISION_REGISTERED": [
+      "work_id",
+      "revision_no",
+      "medium",
+      "incorporated_span_ids"
+    ],
+    "SOURCE_REGISTERED": [
+      "source_id",
+      "kind"
+    ],
+    "SOURCE_WITHDRAWN": [
+      "source_id",
+      "reason"
+    ],
     "FINDING_RAISED": [
+      "finding_id",
+      "rule_id",
       "rule_version",
-      "target_span"
+      "target_span",
+      "severity"
     ],
     "EXCEPTION_PROPOSED": [
+      "exception_id",
+      "finding_refs",
+      "target_span",
       "scope",
-      "rationale"
+      "rationale",
+      "proposed_by",
+      "risk_domains"
+    ],
+    "AUTHOR_STATEMENT_RECORDED": [
+      "exception_id",
+      "statement",
+      "visibility"
+    ],
+    "ON_SET_RECORD_ATTACHED": [
+      "exception_id",
+      "source_id",
+      "note",
+      "recorded_by",
+      "visibility"
+    ],
+    "REVIEW_POSITIONED": [
+      "exception_id",
+      "reviewer",
+      "position",
+      "visibility"
+    ],
+    "EXCEPTION_DECIDED": [
+      "exception_id",
+      "decision",
+      "decided_by",
+      "signed_off_by",
+      "scope",
+      "dissent_preserved",
+      "review"
+    ],
+    "CITATION_RESTRICTION_IMPOSED": [
+      "restriction_id",
+      "exception_id",
+      "span_id",
+      "terms",
+      "imposed_by"
+    ],
+    "REVISION_SUGGESTED": [
+      "suggestion_id",
+      "span_id",
+      "proposed_change",
+      "suggested_by",
+      "status"
     ],
     "RELEASE_FROZEN": [
+      "release_id",
       "revision_ref",
-      "exception_set"
+      "exception_set",
+      "frozen_at"
+    ],
+    "RELEASE_PUBLISHED": [
+      "release_id",
+      "published_at"
+    ],
+    "REVIEW_OUTCOME_RECORDED": [
+      "exception_id",
+      "trigger",
+      "outcome",
+      "reviewed_by"
+    ],
+    "ERRATUM_FILED": [
+      "erratum_id",
+      "release_id",
+      "exception_id",
+      "span_id",
+      "correction"
+    ],
+    "RECOMPUTE_REQUESTED": [
+      "job_id",
+      "trigger",
+      "affected_span_ids"
+    ],
+    "RECOMPUTE_CHECKPOINTED": [
+      "job_id",
+      "seq",
+      "status",
+      "processed_span_ids"
+    ],
+    "RECOMPUTE_COMPLETED": [
+      "job_id",
+      "processed_span_ids",
+      "outcomes"
+    ],
+    "RULE_OVERRIDE_REJECTED": [
+      "exception_id",
+      "rule_id",
+      "rule_version",
+      "attempted_by",
+      "reason"
     ]
   },
-  "additionalProperties": false
+  "payload_enums": {
+    "medium": ["text", "film"],
+    "kind": ["footage", "audio", "interview", "manuscript", "photograph", "other"],
+    "severity": ["style", "structure", "continuity", "copyright", "factual", "other"],
+    "risk_domains": ["artistic_only", "copyright", "factual"],
+    "visibility": ["public", "internal"],
+    "role": ["author", "responsible_editor", "legal", "fact_checker", "technician", "rights_holder"],
+    "position": ["concur", "dissent", "abstain"],
+    "decision": ["retained", "rejected", "retained_with_conditions"],
+    "review_trigger": ["fixed_schedule", "source_withdrawal", "rights_change", "rule_recompute"],
+    "review_outcome": ["upheld", "amended", "revoked"],
+    "suggestion_status": ["suggested", "accepted", "declined", "withdrawn"],
+    "recompute_trigger": ["rule_version_change", "source_withdrawal", "erratum_revision", "manual"],
+    "checkpoint_status": ["running", "interrupted", "resumed"],
+    "recompute_action": ["no_change", "finding_reopened", "exception_flagged_for_review"],
+    "restriction_terms": [
+      "verbatim_limit",
+      "paraphrase_only",
+      "credit_required",
+      "regional_block",
+      "withdrawal_required",
+      "other"
+    ]
+  },
+  "payload_enum_paths_by_event": {
+    "REVISION_REGISTERED": {
+      "medium": "medium"
+    },
+    "SOURCE_REGISTERED": {
+      "kind": "kind"
+    },
+    "FINDING_RAISED": {
+      "severity": "severity",
+      "target_span.kind": "kind"
+    },
+    "EXCEPTION_PROPOSED": {
+      "target_span.kind": "kind",
+      "proposed_by.role": "role",
+      "risk_domains": "risk_domains"
+    },
+    "AUTHOR_STATEMENT_RECORDED": {
+      "visibility": "visibility"
+    },
+    "ON_SET_RECORD_ATTACHED": {
+      "recorded_by.role": "role",
+      "visibility": "visibility"
+    },
+    "REVIEW_POSITIONED": {
+      "reviewer.role": "role",
+      "visibility": "visibility",
+      "position": "position"
+    },
+    "EXCEPTION_DECIDED": {
+      "decision": "decision",
+      "decided_by.role": "role",
+      "signed_off_by.role": "role",
+      "review.triggers": "review_trigger"
+    },
+    "REVIEW_OUTCOME_RECORDED": {
+      "reviewed_by.role": "role",
+      "trigger": "review_trigger",
+      "outcome": "review_outcome"
+    },
+    "CITATION_RESTRICTION_IMPOSED": {
+      "imposed_by.role": "role",
+      "terms": "restriction_terms"
+    },
+    "REVISION_SUGGESTED": {
+      "suggested_by.role": "role",
+      "status": "suggestion_status"
+    },
+    "RECOMPUTE_REQUESTED": {
+      "trigger": "recompute_trigger"
+    },
+    "RECOMPUTE_CHECKPOINTED": {
+      "status": "checkpoint_status"
+    },
+    "RECOMPUTE_COMPLETED": {
+      "outcomes.action": "recompute_action"
+    },
+    "RULE_OVERRIDE_REJECTED": {
+      "attempted_by.role": "role"
+    }
+  },
+  "payload_nested_objects": {
+    "target_span": ["span_id", "kind", "locator"],
+    "scope": ["span_ids"],
+    "proposed_by": ["party_id", "role"],
+    "reviewer": ["party_id", "role"],
+    "decided_by": ["party_id", "role"],
+    "imposed_by": ["party_id", "role"],
+    "suggested_by": ["party_id", "role"],
+    "recorded_by": ["party_id", "role"],
+    "attempted_by": ["party_id", "role"],
+    "reviewed_by": ["party_id", "role"],
+    "revision_ref": ["work_id", "revision_no"]
+  },
+  "payload_nonempty_lists": [
+    "finding_refs",
+    "risk_domains",
+    "signed_off_by",
+    "terms",
+    "exception_set",
+    "affected_span_ids",
+    "processed_span_ids",
+    "outcomes",
+    "incorporated_span_ids",
+    "scope.span_ids"
+  ],
+  "risk_signoff": {
+    "copyright": "legal",
+    "factual": "fact_checker"
+  },
+  "decision_review_required": ["retained", "retained_with_conditions"]
 }

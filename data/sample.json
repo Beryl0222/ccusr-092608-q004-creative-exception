@@ -1,9 +1,477 @@
-{
-  "event_id": "092601-004-sample-001",
-  "event_type": "REVISION_REGISTERED",
-  "aggregate_type": "work_revision",
-  "aggregate_id": "creative_exception-001",
-  "occurred_at": "2026-09-25T10:00:00+08:00",
-  "version": 1,
-  "payload": {}
-}
+[
+  {
+    "event_id": "evt-0001",
+    "event_type": "REVISION_REGISTERED",
+    "aggregate_type": "work_revision",
+    "aggregate_id": "work-001",
+    "occurred_at": "2026-09-01T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "work_id": "work-001",
+      "revision_no": 1,
+      "medium": "film",
+      "title": "巷口纪录片（粗剪定版）",
+      "incorporated_span_ids": ["shot-12", "shot-34"],
+      "note": "首版剪辑，含两处待判定的自动检查发现"
+    }
+  },
+  {
+    "event_id": "evt-0002",
+    "event_type": "SOURCE_REGISTERED",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-001",
+    "occurred_at": "2026-09-02T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_id": "src-001",
+      "kind": "footage",
+      "label": "2026-08-21 巷口跟拍原始素材",
+      "rights": "受访者口述授权，仅限本片使用"
+    }
+  },
+  {
+    "event_id": "evt-0003",
+    "event_type": "SOURCE_REGISTERED",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-002",
+    "occurred_at": "2026-09-02T09:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_id": "src-002",
+      "kind": "interview",
+      "label": "导演与受访人的事后访谈录音",
+      "rights": "内部存档"
+    }
+  },
+  {
+    "event_id": "evt-0004",
+    "event_type": "FINDING_RAISED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "finding-001",
+    "occurred_at": "2026-09-03T08:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "finding_id": "finding-001",
+      "rule_id": "rule-pacing-flatline",
+      "rule_version": "3.1.0",
+      "target_span": {"span_id": "shot-12", "kind": "footage", "locator": "00:04:11-00:04:47"},
+      "severity": "continuity",
+      "detail": "镜头停顿超过节奏阈值，系统判为疑似未修剪空白"
+    }
+  },
+  {
+    "event_id": "evt-0005",
+    "event_type": "FINDING_RAISED",
+    "aggregate_type": "quality_finding",
+    "aggregate_id": "finding-002",
+    "occurred_at": "2026-09-03T08:00:01+08:00",
+    "version": 1,
+    "payload": {
+      "finding_id": "finding-002",
+      "rule_id": "rule-verbatim-quote",
+      "rule_version": "2.4.0",
+      "target_span": {"span_id": "shot-34", "kind": "footage", "locator": "00:11:02-00:11:39"},
+      "severity": "copyright",
+      "detail": "口述内容与第三方出版物文字高度重合，疑似超长度真实引用"
+    }
+  },
+  {
+    "event_id": "evt-0006",
+    "event_type": "EXCEPTION_PROPOSED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-04T14:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "exception_id": "ex-001",
+      "finding_refs": ["finding-001"],
+      "target_span": {"span_id": "shot-12", "kind": "footage", "locator": "00:04:11-00:04:47"},
+      "scope": {"span_ids": ["shot-12"], "revisions": [1], "channels": ["festival_cut"]},
+      "rationale": "长停顿是受访者从沉默到开口的关键节奏，剪掉会削弱临场真实感。",
+      "proposed_by": {"party_id": "party-director", "role": "author"},
+      "risk_domains": ["artistic_only"]
+    }
+  },
+  {
+    "event_id": "evt-0007",
+    "event_type": "AUTHOR_STATEMENT_RECORDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-05T10:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "exception_id": "ex-001",
+      "statement": "这个停顿是刻意保留：剪辑台上我和指导老师讨论过两次，不是漏剪。",
+      "visibility": "internal"
+    }
+  },
+  {
+    "event_id": "evt-0008",
+    "event_type": "ON_SET_RECORD_ATTACHED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-05T10:05:00+08:00",
+    "version": 3,
+    "payload": {
+      "exception_id": "ex-001",
+      "source_id": "src-001",
+      "note": "原始素材时间码显示停顿后受访者情绪转折，录音师现场未提示停机。",
+      "recorded_by": {"party_id": "party-sound", "role": "technician"},
+      "visibility": "internal"
+    }
+  },
+  {
+    "event_id": "evt-0009",
+    "event_type": "REVIEW_POSITIONED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-06T09:00:00+08:00",
+    "version": 4,
+    "payload": {
+      "exception_id": "ex-001",
+      "reviewer": {"party_id": "party-editor", "role": "responsible_editor"},
+      "position": "concur",
+      "comment": "同意保留，停顿承担叙事功能。",
+      "visibility": "public"
+    }
+  },
+  {
+    "event_id": "evt-0010",
+    "event_type": "REVIEW_POSITIONED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-06T09:20:00+08:00",
+    "version": 5,
+    "payload": {
+      "exception_id": "ex-001",
+      "reviewer": {"party_id": "party-factcheck", "role": "fact_checker"},
+      "position": "dissent",
+      "comment": "担心观众误读为技术故障，建议加字幕提示。",
+      "visibility": "internal"
+    }
+  },
+  {
+    "event_id": "evt-0011",
+    "event_type": "EXCEPTION_DECIDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-07T16:00:00+08:00",
+    "version": 6,
+    "payload": {
+      "exception_id": "ex-001",
+      "decision": "retained",
+      "decided_by": {"party_id": "party-editor", "role": "responsible_editor"},
+      "signed_off_by": [{"party_id": "party-editor", "role": "responsible_editor"}],
+      "scope": {"span_ids": ["shot-12"], "revisions": [1], "channels": ["festival_cut"]},
+      "dissent_preserved": [
+        {"party_id": "party-editor", "position": "concur"},
+        {"party_id": "party-factcheck", "position": "dissent"}
+      ],
+      "review": {
+        "due_at": "2027-03-01T00:00:00+08:00",
+        "triggers": ["fixed_schedule", "source_withdrawal"],
+        "note": "素材授权状态变化或满 18 个月时复审。"
+      }
+    }
+  },
+  {
+    "event_id": "evt-0012",
+    "event_type": "EXCEPTION_PROPOSED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-002",
+    "occurred_at": "2026-09-08T11:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "exception_id": "ex-002",
+      "finding_refs": ["finding-002"],
+      "target_span": {"span_id": "shot-34", "kind": "footage", "locator": "00:11:02-00:11:39"},
+      "scope": {"span_ids": ["shot-34"], "revisions": [1, 2], "channels": ["festival_cut", "streaming"]},
+      "rationale": "受访者直接诵读的是其本人日记，口述本身即纪录对象，不能改写成转述。",
+      "proposed_by": {"party_id": "party-director", "role": "author"},
+      "risk_domains": ["copyright"]
+    }
+  },
+  {
+    "event_id": "evt-0013",
+    "event_type": "AUTHOR_STATEMENT_RECORDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-002",
+    "occurred_at": "2026-09-08T11:10:00+08:00",
+    "version": 2,
+    "payload": {
+      "exception_id": "ex-002",
+      "statement": "这段诵读是受访者主动要求保留的原话，我主张保留但接受任何版权处置条件。",
+      "visibility": "public"
+    }
+  },
+  {
+    "event_id": "evt-0014",
+    "event_type": "EXCEPTION_DECIDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-002",
+    "occurred_at": "2026-09-09T15:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "exception_id": "ex-002",
+      "decision": "retained_with_conditions",
+      "decided_by": {"party_id": "party-editor", "role": "responsible_editor"},
+      "signed_off_by": [
+        {"party_id": "party-legal", "role": "legal"},
+        {"party_id": "party-director", "role": "author"}
+      ],
+      "scope": {"span_ids": ["shot-34"], "revisions": [1, 2], "channels": ["festival_cut", "streaming"]},
+      "dissent_preserved": [],
+      "review": {
+        "due_at": "2027-01-10T00:00:00+08:00",
+        "triggers": ["fixed_schedule", "rights_change", "rule_recompute"],
+        "note": "需取得出版社书面授权或加出处字幕；授权范围变化即复审。"
+      }
+    }
+  },
+  {
+    "event_id": "evt-0015",
+    "event_type": "CITATION_RESTRICTION_IMPOSED",
+    "aggregate_type": "citation_restriction",
+    "aggregate_id": "cr-001",
+    "occurred_at": "2026-09-09T16:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "restriction_id": "cr-001",
+      "exception_id": "ex-002",
+      "span_id": "shot-34",
+      "terms": ["verbatim_limit", "credit_required"],
+      "detail": "原话保留不超过 37 秒，片尾与画面内均标注书名与版本。",
+      "imposed_by": {"party_id": "party-legal", "role": "legal"}
+    }
+  },
+  {
+    "event_id": "evt-0016",
+    "event_type": "REVISION_SUGGESTED",
+    "aggregate_type": "revision_suggestion",
+    "aggregate_id": "sug-001",
+    "occurred_at": "2026-09-10T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "suggestion_id": "sug-001",
+      "span_id": "shot-34",
+      "proposed_change": "若授权未到，备选方案为压到 20 秒并以旁白转述后半段。",
+      "suggested_by": {"party_id": "party-editor", "role": "responsible_editor"},
+      "status": "accepted"
+    }
+  },
+  {
+    "event_id": "evt-0017",
+    "event_type": "RULE_OVERRIDE_REJECTED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-11T09:00:00+08:00",
+    "version": 7,
+    "payload": {
+      "exception_id": "ex-001",
+      "rule_id": "rule-pacing-flatline",
+      "rule_version": "4.0.0",
+      "attempted_by": {"party_id": "party-automation", "role": "technician"},
+      "reason": "新节奏规则试图批量剪短全部长停顿，但该例外已由责任编辑签发保留，系统拒绝覆盖并登记本次尝试。"
+    }
+  },
+  {
+    "event_id": "evt-0018",
+    "event_type": "RELEASE_FROZEN",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "release-001",
+    "occurred_at": "2026-09-12T18:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "release_id": "release-001",
+      "revision_ref": {"work_id": "work-001", "revision_no": 1},
+      "exception_set": [
+        {
+          "exception_id": "ex-001",
+          "retained_basis": "责任编辑 2026-09-07 签发：停顿承担叙事转折，事实核查异议并存。"
+        },
+        {
+          "exception_id": "ex-002",
+          "retained_basis": "法务+作者 2026-09-09 签发：附引用时长与署名限制条件保留。"
+        }
+      ],
+      "frozen_at": "2026-09-12T18:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-0019",
+    "event_type": "RELEASE_PUBLISHED",
+    "aggregate_type": "release_snapshot",
+    "aggregate_id": "release-001",
+    "occurred_at": "2026-09-13T20:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "release_id": "release-001",
+      "channel": "电影节首映",
+      "published_at": "2026-09-13T20:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-0020",
+    "event_type": "REVISION_REGISTERED",
+    "aggregate_type": "work_revision",
+    "aggregate_id": "work-001",
+    "occurred_at": "2026-09-14T10:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "work_id": "work-001",
+      "revision_no": 2,
+      "medium": "film",
+      "title": "巷口纪录片（流媒体版）",
+      "incorporated_span_ids": ["shot-34", "shot-56"],
+      "note": "流媒体版未使用 shot-12，后续规则重算对该片段只影响真实引用它的版本。"
+    }
+  },
+  {
+    "event_id": "evt-0021",
+    "event_type": "SOURCE_WITHDRAWN",
+    "aggregate_type": "source_material",
+    "aggregate_id": "src-001",
+    "occurred_at": "2026-09-15T12:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "source_id": "src-001",
+      "reason": "受访者代理人来函，主张收回跟拍素材的肖像使用许可（授权范围待重新确认）。"
+    }
+  },
+  {
+    "event_id": "evt-0022",
+    "event_type": "REVIEW_OUTCOME_RECORDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-16T11:00:00+08:00",
+    "version": 8,
+    "payload": {
+      "exception_id": "ex-001",
+      "trigger": "source_withdrawal",
+      "outcome": "upheld",
+      "reviewed_by": {"party_id": "party-editor", "role": "responsible_editor"},
+      "note": "已上映版本保留当时理由；新发行版本须等授权再确认，不改变冻结集合。"
+    }
+  },
+  {
+    "event_id": "evt-0023",
+    "event_type": "RECOMPUTE_REQUESTED",
+    "aggregate_type": "recompute_job",
+    "aggregate_id": "job-001",
+    "occurred_at": "2026-09-17T08:30:00+08:00",
+    "version": 1,
+    "payload": {
+      "job_id": "job-001",
+      "trigger": "rule_version_change",
+      "rule_id": "rule-verbatim-quote",
+      "rule_version": "3.0.0",
+      "affected_span_ids": ["shot-12", "shot-34"],
+      "note": "引用与节奏规则升级后的批量依赖重算。"
+    }
+  },
+  {
+    "event_id": "evt-0024",
+    "event_type": "RECOMPUTE_CHECKPOINTED",
+    "aggregate_type": "recompute_job",
+    "aggregate_id": "job-001",
+    "occurred_at": "2026-09-17T08:45:00+08:00",
+    "version": 2,
+    "payload": {
+      "job_id": "job-001",
+      "seq": 1,
+      "status": "running",
+      "processed_span_ids": ["shot-12"]
+    }
+  },
+  {
+    "event_id": "evt-0025",
+    "event_type": "RECOMPUTE_CHECKPOINTED",
+    "aggregate_type": "recompute_job",
+    "aggregate_id": "job-001",
+    "occurred_at": "2026-09-18T22:10:00+08:00",
+    "version": 3,
+    "payload": {
+      "job_id": "job-001",
+      "seq": 2,
+      "status": "interrupted",
+      "processed_span_ids": ["shot-34"],
+      "note": "批处理节点维护中断，已处理片段落检查点。"
+    }
+  },
+  {
+    "event_id": "evt-0026",
+    "event_type": "RECOMPUTE_CHECKPOINTED",
+    "aggregate_type": "recompute_job",
+    "aggregate_id": "job-001",
+    "occurred_at": "2026-09-19T09:00:00+08:00",
+    "version": 4,
+    "payload": {
+      "job_id": "job-001",
+      "seq": 3,
+      "status": "resumed",
+      "processed_span_ids": ["shot-34"],
+      "note": "从中断点续跑，复核 shot-34 的引用判定。"
+    }
+  },
+  {
+    "event_id": "evt-0027",
+    "event_type": "RECOMPUTE_COMPLETED",
+    "aggregate_type": "recompute_job",
+    "aggregate_id": "job-001",
+    "occurred_at": "2026-09-19T09:20:00+08:00",
+    "version": 5,
+    "payload": {
+      "job_id": "job-001",
+      "processed_span_ids": ["shot-12", "shot-34"],
+      "outcomes": [
+        {"span_id": "shot-12", "action": "no_change", "detail": "新规则同样命中，但保留判断已签发，不自动改判。"},
+        {"span_id": "shot-34", "action": "exception_flagged_for_review", "detail": "新规则把重合阈值下调，提示法务复审授权状态，不直接覆盖条件。"}
+      ]
+    }
+  },
+  {
+    "event_id": "evt-0028",
+    "event_type": "REVIEW_OUTCOME_RECORDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-002",
+    "occurred_at": "2026-09-20T15:00:00+08:00",
+    "version": 4,
+    "payload": {
+      "exception_id": "ex-002",
+      "trigger": "rule_recompute",
+      "outcome": "amended",
+      "reviewed_by": {"party_id": "party-legal", "role": "legal"},
+      "note": "维持保留，但 verbatim_limit 从 37 秒收紧到 20 秒，流媒体版按备选建议处理。"
+    }
+  },
+  {
+    "event_id": "evt-0029",
+    "event_type": "ERRATUM_FILED",
+    "aggregate_type": "erratum",
+    "aggregate_id": "errata-001",
+    "occurred_at": "2026-09-21T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "erratum_id": "errata-001",
+      "release_id": "release-001",
+      "exception_id": "ex-002",
+      "span_id": "shot-34",
+      "correction": "片尾字幕补全出版社名称与版次；首映版画面不变，当时保留理由随勘误一并存档。"
+    }
+  },
+  {
+    "event_id": "evt-0030",
+    "event_type": "REVIEW_OUTCOME_RECORDED",
+    "aggregate_type": "exception_case",
+    "aggregate_id": "ex-001",
+    "occurred_at": "2026-09-22T10:00:00+08:00",
+    "version": 9,
+    "payload": {
+      "exception_id": "ex-001",
+      "trigger": "fixed_schedule",
+      "outcome": "upheld",
+      "reviewed_by": {"party_id": "party-editor", "role": "responsible_editor"},
+      "note": "例行复审确认：该停顿的艺术判断仍然成立。"
+    }
+  }
+]
